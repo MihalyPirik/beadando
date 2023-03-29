@@ -31,13 +31,6 @@ window.onload = function () {
 }
 
 function Update() {
-    if (snakeX == foodX && snakeY == foodY) {
-        snakeBody.push([foodX, foodY])
-        score++
-        PlaceFood()
-
-    }
-
     if (gameOver) {
         if (score > maxScore) {
             maxScore = score
@@ -111,6 +104,13 @@ function Update() {
         win = true
         document.getElementById("score").innerHTML = score
         alert("Win")
+    }
+
+    if (snakeX == foodX && snakeY == foodY) {
+        snakeBody.push([foodX, foodY])
+        score++
+        PlaceFood()
+
     }
 }
 
