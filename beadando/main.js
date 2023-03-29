@@ -1,3 +1,14 @@
+const Snake=
+{
+    headCordinateX,
+    headCordinateY,
+    bodyCordinates:new Array()
+}
+
+
+
+
+
 let blockSize = 25
 let rows = 20
 let columns = 20
