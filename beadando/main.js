@@ -78,27 +78,45 @@ function Update() {
 }
 
 function changeDirection(e) {
-    let keypress = true
-    if (e.code == "ArrowUp" && velocityY != 1 && keypress) {
-        velocityX = 0
-        velocityY = -1
-        keypress = false
+
+
+    switch (e.code) {
+        case "ArrowUp":
+            if(velocityY!=1){velocityX=0;velocityY=-1}
+            break;
+        case "ArrowDown":
+            if(velocityY!=-1){velocityX=0;velocityY=1}
+            break;
+        case "ArrowLeft":
+            if(velocityX!=1){velocityX=-1;velocityY=0}
+            break;
+        case "ArrowRight":
+            if(velocityX!=-1){velocityX=1;velocityY=0}
+            break;
+        default:
+            break;
     }
-    else if (e.code == "ArrowDown" && velocityY != -1 && keypress) {
-        velocityX = 0
-        velocityY = 1
-        keypress = false
-    }
-    else if (e.code == "ArrowLeft" && velocityX != 1 && keypress) {
-        velocityX = -1
-        velocityY = 0
-        keypress = false
-    }
-    else if (e.code == "ArrowRight" && velocityX != -1 && keypress) {
-        velocityX = 1
-        velocityY = 0
-        keypress = false
-    }
+    // let keypress = true
+    // if (e.code == "ArrowUp" && velocityY != 1 && keypress) {
+    //     velocityX = 0
+    //     velocityY = -1
+    //     keypress = false
+    // }
+    // else if (e.code == "ArrowDown" && velocityY != -1 && keypress) {
+    //     velocityX = 0
+    //     velocityY = 1
+    //     keypress = false
+    // }
+    // else if (e.code == "ArrowLeft" && velocityX != 1 && keypress) {
+    //     velocityX = -1
+    //     velocityY = 0
+    //     keypress = false
+    // }
+    // else if (e.code == "ArrowRight" && velocityX != -1 && keypress) {
+    //     velocityX = 1
+    //     velocityY = 0
+    //     keypress = false
+    // }
 }
 
 function PlaceFood() {
