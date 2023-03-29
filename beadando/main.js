@@ -78,21 +78,26 @@ function Update() {
 }
 
 function changeDirection(e) {
-    if (e.code == "ArrowUp" && velocityY != 1) {
+    let keypress = true
+    if (e.code == "ArrowUp" && velocityY != 1 && keypress) {
         velocityX = 0
         velocityY = -1
+        keypress = false
     }
-    else if (e.code == "ArrowDown" && velocityY != -1) {
+    else if (e.code == "ArrowDown" && velocityY != -1 && keypress) {
         velocityX = 0
         velocityY = 1
+        keypress = false
     }
-    else if (e.code == "ArrowLeft" && velocityX != 1) {
+    else if (e.code == "ArrowLeft" && velocityX != 1 && keypress) {
         velocityX = -1
         velocityY = 0
+        keypress = false
     }
-    else if (e.code == "ArrowRight" && velocityX != -1) {
+    else if (e.code == "ArrowRight" && velocityX != -1 && keypress) {
         velocityX = 1
         velocityY = 0
+        keypress = false
     }
 }
 
