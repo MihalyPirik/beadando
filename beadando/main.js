@@ -18,6 +18,7 @@ let foodY
 
 let win = false
 let gameOver = false
+let updateInterval = setInterval(Update, speed)
 
 window.onload = function () {
     board = document.getElementById("board")
@@ -27,7 +28,7 @@ window.onload = function () {
 
     PlaceFood()
     document.addEventListener("keyup", changeDirection)
-    setInterval(Update, speed)
+    updateInterval
 }
 
 function Update() {
@@ -44,7 +45,7 @@ function Update() {
         snakeBody = []
         PlaceFood()
         gameOver = false
-        setInterval(Update, speed)
+        updateInterval = clearInterval()
     }
 
     if (win) {
@@ -60,7 +61,7 @@ function Update() {
         snakeBody = []
         PlaceFood()
         win = false
-        setInterval(Update, speed)
+        updateInterval = clearInterval()
     }
 
     context.fillStyle = "black"
