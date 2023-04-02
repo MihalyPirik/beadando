@@ -45,7 +45,6 @@ function Update() {
         snakeBody = []
         PlaceFood()
         gameOver = false
-        updateInterval = clearInterval()
     }
 
     if (win) {
@@ -61,7 +60,6 @@ function Update() {
         snakeBody = []
         PlaceFood()
         win = false
-        updateInterval = clearInterval()
     }
 
     context.fillStyle = "black"
@@ -111,7 +109,6 @@ function Update() {
         snakeBody.push([foodX, foodY])
         score++
         PlaceFood()
-
     }
 }
 
