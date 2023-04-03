@@ -16,6 +16,9 @@ let snakeBody = []
 let foodX
 let foodY
 
+let poisonX
+let poisonY
+
 let win = false
 let gameOver = false
 let updateInterval = setInterval(Update, speed)
@@ -27,6 +30,7 @@ window.onload = function () {
     context = board.getContext("2d")
 
     PlaceFood()
+    PlacePoison()
     document.addEventListener("keyup", changeDirection)
     updateInterval
 }
@@ -44,6 +48,7 @@ function Update() {
         snakeY = blockSize * 5
         snakeBody = []
         PlaceFood()
+        PlacePoison()
         gameOver = false
     }
 
@@ -59,6 +64,7 @@ function Update() {
         snakeY = blockSize * 5
         snakeBody = []
         PlaceFood()
+        PlacePoison()
         win = false
     }
 
@@ -67,6 +73,9 @@ function Update() {
 
     context.fillStyle = "red"
     context.fillRect(foodX, foodY, blockSize, blockSize)
+
+    context.fillStyle = "orange"
+    context.fillRect(poisonX, poisonY, blockSize, blockSize)
 
     for (let i = snakeBody.length - 1; i > 0; i--) {
         snakeBody[i] = snakeBody[i - 1]
@@ -109,6 +118,13 @@ function Update() {
         snakeBody.push([foodX, foodY])
         score++
         PlaceFood()
+        PlacePoison()
+    }
+
+    if (snakeX == poisonX && snakeY == poisonY) {
+        gameOver = true
+        document.getElementById("score").innerHTML = score
+        alert("Game Over")
     }
 }
 
@@ -132,26 +148,16 @@ function changeDirection(e) {
             break;
     }
 
-    // if (e.code == "ArrowUp" && velocityY != 1) {
-    //     velocityX = 0
-    //     velocityY = -1
-    // }
-    // else if (e.code == "ArrowDown" && velocityY != -1) {
-    //     velocityX = 0
-    //     velocityY = 1
-    // }
-    // else if (e.code == "ArrowLeft" && velocityX != 1) {
-    //     velocityX = -1
-    //     velocityY = 0
-    // }
-    // else if (e.code == "ArrowRight" && velocityX != -1) {
-    //     velocityX = 1
-    //     velocityY = 0
-    // }
 }
 
 function PlaceFood() {
     foodX = Math.floor(Math.random() * rows) * blockSize
     foodY = Math.floor(Math.random() * columns) * blockSize
+    document.getElementById("score").innerHTML = score
+}
+
+function PlacePoison() {
+    poisonX = Math.floor(Math.random() * rows) * blockSize
+    poisonY = Math.floor(Math.random() * columns) * blockSize
     document.getElementById("score").innerHTML = score
 }
