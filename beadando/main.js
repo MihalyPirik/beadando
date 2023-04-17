@@ -31,8 +31,14 @@ function poisonmove() {
     noveltY=Math.round(Math.random()*2-1)*blockSize,
     newPosionX=poisonX+noveltX,
     newPosionY=poisonY+noveltY
+const snakeBodyCollide=false
+for(const body of snakeBody){
+    if(newPosionX==body[0] || newPosionY==body[1]){
+        snakeBodyCollide=true
+    }
+}
 while(newPosionX < 0 || newPosionX > columns * blockSize || newPosionX==foodX || newPosionY < 0 || newPosionY > columns * blockSize || newPosionY==foodY
-  || noveltX==0 || noveltY==0)
+  || noveltX==0 || noveltY==0 || snakeBodyCollide)
 {
   noveltX=Math.round(Math.random()*2-1)*blockSize
   noveltY=Math.round(Math.random()*2-1)*blockSize
