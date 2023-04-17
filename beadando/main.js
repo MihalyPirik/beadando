@@ -22,6 +22,30 @@ let poisonY
 let win = false
 let gameOver = false
 let updateInterval = setInterval(Update, speed)
+setInterval(poisonmove,400)
+
+
+
+function poisonmove() {
+    let noveltX=Math.round(Math.random()*2-1)*blockSize,
+    noveltY=Math.round(Math.random()*2-1)*blockSize,
+    newPosionX=poisonX+noveltX,
+    newPosionY=poisonY+noveltY
+while(newPosionX < 0 || newPosionX > columns * blockSize || newPosionX==foodX || newPosionY < 0 || newPosionY > columns * blockSize || newPosionY==foodY
+  || noveltX==0 || noveltY==0)
+{
+  noveltX=Math.round(Math.random()*2-1)*blockSize
+  noveltY=Math.round(Math.random()*2-1)*blockSize
+  newPosionX=poisonX+noveltX
+  newPosionY=poisonY+noveltY
+}
+context.fillStyle="black"
+context.fillRect(poisonX,poisonY,blockSize,blockSize)
+context.fillStyle="orange"
+poisonX=newPosionX
+poisonY=newPosionY
+context.fillRect(poisonX,poisonY,blockSize,blockSize)
+}
 
 window.onload = function () {
     board = document.getElementById("board")
@@ -76,6 +100,10 @@ function Update() {
 
     context.fillStyle = "orange"
     context.fillRect(poisonX, poisonY, blockSize, blockSize)
+    
+    
+
+
 
     for (let i = snakeBody.length - 1; i > 0; i--) {
         snakeBody[i] = snakeBody[i - 1]
