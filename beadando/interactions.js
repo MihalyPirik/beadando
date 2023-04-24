@@ -12,15 +12,14 @@ function FoodEffect() {
         PlaceFood()
         ctx.fillStyle=boardColor;
         ctx.fillRect(Poison.cordinateX,Poison.cordinateY,blockSize,blockSize)
-        PlacePoison()
     }
 }
 function SetInitialStage() {
     Snake.bodyCordinates=[];
     Snake.velocityX=null;
     Snake.velocityY=null;
-    Poison.velocityX=null;
-    Poison.velocityY=null;
+    Poison.cordinateX=Array(4,Number);
+    Poison.cordinateY=Array(4,Number);
     if(maxScore==0){document.getElementById("maxScore").innerText=score;maxScore=score}
     else{if(score>maxScore){document.getElementById("maxScore").innerText=score;maxScore=score}}
     score=0;
@@ -49,10 +48,13 @@ function OutsideTheBoard() {
     }
 }
 function PoisonEffect() {
-    if(Snake.headCordinateX==Poison.cordinateX && Snake.headCordinateY==Poison.cordinateY)
-    {
-        alert("Game Over!");
-        SetInitialStage()
+    for (let i = 0; i < Poison.number; i++) {
+        if(Snake.headCordinateX==Poison.cordinateX[i] && Snake.headCordinateY==Poison.cordinateY[i])
+        {
+            alert("Game Over!");
+            SetInitialStage();
+            break
+        }  
     }
 }
 

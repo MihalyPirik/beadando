@@ -1,6 +1,6 @@
 import { FoodEffect, OutsideTheBoard, PoisonEffect, SnakeBodyCollide, Win } from "./interactions.js";
 import { SetBoard,speed } from "./board.js";
-import { PlaceFood,PlacePoison,PlaceSnakeHead,SnakeMove,PoisonMove } from "./objects.js";
+import { PlaceFood,PlacePoison,PlaceSnakeHead,SnakeMove,PoisonMove, Poison } from "./objects.js";
 SetBoard()
 PlaceFood()
 PlacePoison()
@@ -11,28 +11,12 @@ setInterval(function()
 {
     Win()
     SnakeMove()
-    // PoisonMove()
     FoodEffect()
     SnakeBodyCollide()
     OutsideTheBoard()
     PoisonEffect()
-},speed)
-import { FoodEffect, OutsideTheBoard, PoisonEffect, SnakeBodyCollide, Win } from "./interactions.js";
-import { SetBoard,speed } from "./board.js";
-import { PlaceFood,PlacePoison,PlaceSnakeHead,SnakeMove,PoisonMove } from "./objects.js";
-SetBoard()
-PlaceFood()
-PlacePoison()
-PlaceSnakeHead()
+},speed);
 
-
-setInterval(function()
-{
-    Win()
-    SnakeMove()
-    // PoisonMove()
-    FoodEffect()
-    SnakeBodyCollide()
-    OutsideTheBoard()
-    PoisonEffect()
-},speed)
+setInterval(function(){
+    PoisonMove()
+},Poison.speed)

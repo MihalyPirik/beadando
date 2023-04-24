@@ -5,7 +5,7 @@ const Snake=
     headCordinateX:null,
     headCordinateY:null,
 
-    bodyCordinates:[],
+    bodyCordinates:Array(),
 
     velocityX:null,
     velocityY:null,
@@ -23,43 +23,49 @@ const Food=
 
 const Poison=
 {
-    cordinateX:null,
-    cordinateY:null,
+    cordinateX:Array(4,Number),
+    cordinateY:Array(4,Number),
 
-    velocityX:null,
-    velocityY:null,
+    color:"orange",
 
-    color:"orange"
+    number:null,
+    speed:1000
 }
 
 function PlaceFood() {
     Food.cordinateX=Random(0,rows)*blockSize;
     Food.cordinateY=Random(0,columns)*blockSize;
-    while(Food.cordinateX==Poison.cordinateX || Food.cordinateX==Snake.headCordinateX || SnakeBodyCollisonX(Food.cordinateX))
+    while(Food.cordinateX==Poison.cordinateX || Food.cordinateX==Snake.headCordinateX || SnakeBodyCollisonX(Food.cordinateX) || PoisonCollisonX(Food.cordinateX))
         {Food.cordinateX=Random(0,rows)*blockSize}
-    while(Food.cordinateY==Poison.cordinateY || Food.cordinateY==Snake.headCordinateY || SnakeBodyCollisonY(Food.cordinateY))
+    while(Food.cordinateY==Poison.cordinateY || Food.cordinateY==Snake.headCordinateY || SnakeBodyCollisonY(Food.cordinateY) || PoisonCollisonY(Food.cordinateY))
         {Food.cordinateY=Random(0,columns)*blockSize}
     ctx.fillStyle=Food.color;
     ctx.fillRect(Food.cordinateX,Food.cordinateY,blockSize,blockSize)
 }
 
 function PlacePoison() {
-    Poison.cordinateX=Random(0,rows)*blockSize;
-    Poison.cordinateY=Random(0,columns)*blockSize;
-    while(Poison.cordinateX==Food.cordinateX || Poison.cordinateX==Snake.headCordinateX || SnakeBodyCollisonX(Poison.cordinateX))
-        {Poison.cordinateX=Random(0,rows)*blockSize}
-    while(Poison.cordinateY==Food.cordinateY || Poison.cordinateY==Snake.headCordinateY || SnakeBodyCollisonY(Poison.cordinateY))
-        {Poison.cordinateY=Random(0,columns)*blockSize}
-    ctx.fillStyle=Poison.color;
-    ctx.fillRect(Poison.cordinateX,Poison.cordinateY,blockSize,blockSize)
+    Poison.number=Random(1,5);
+    for (let i = 0; i < Poison.number; i++) {
+        Poison.cordinateX[i]=Random(0,rows)*blockSize;
+        Poison.cordinateY[i]=Random(0,columns)*blockSize;
+        while(Poison.cordinateX[i]==Food.cordinateX || Poison.cordinateX[i]==Snake.headCordinateX || SnakeBodyCollisonX(Poison.cordinateX[i]))
+            {Poison.cordinateX[i]=Random(0,rows)*blockSize}
+        while(Poison.cordinateY[i]==Food.cordinateY || Poison.cordinateY[i]==Snake.headCordinateY || SnakeBodyCollisonY(Poison.cordinateY[i]))
+            {Poison.cordinateY[i]=Random(0,columns)*blockSize}
+    }
+    for (let i = 0; i < Poison.number; i++) {
+        ctx.fillStyle=Poison.color;
+        ctx.fillRect(Poison.cordinateX[i],Poison.cordinateY[i],blockSize,blockSize)
+    }
+    
 }
 
 function PlaceSnakeHead() {
     Snake.headCordinateX=Random(0,rows)*blockSize;
     Snake.headCordinateY=Random(0,columns)*blockSize;
-    while(Snake.headCordinateX==Poison.cordinateX || Snake.headCordinateX==Food.cordinateX)
+    while(Snake.headCordinateX==Poison.cordinateX || Snake.headCordinateX==Food.cordinateX || PoisonCollisonX(Snake.headCordinateX))
         {Snake.headCordinateX=Random(0,rows)*blockSize}
-    while(Snake.headCordinateY==Poison.cordinateY || Snake.headCordinateY==Food.cordinateY)
+    while(Snake.headCordinateY==Poison.cordinateY || Snake.headCordinateY==Food.cordinateY || PoisonCollisonY(Snake.headCordinateY))
         {Snake.headCordinateY=Random(0,columns)*blockSize}
     ctx.fillStyle=Snake.color;
     ctx.fillRect(Snake.headCordinateX,Snake.headCordinateY,blockSize,blockSize)
@@ -82,6 +88,20 @@ function SnakeBodyCollisonY(objectCordinate) {
     return false
 }
 
+function PoisonCollisonX(objectCordinate) {
+    for (let i = 0; i < Poison.cordinateX.length; i++) {
+        if(Poison.cordinateX[i]==objectCordinate){return true}
+    }
+    return false
+}
+
+function PoisonCollisonY(objectCordinate) {
+    for (let i = 0; i < Poison.cordinateY.length; i++) {
+        if(Poison.cordinateY[i]==objectCordinate){return true}
+    }
+    return false
+}
+
 function SnakeandPoisonVelocity(key) {
     switch (key.code) {
         case "ArrowUp":
@@ -99,8 +119,6 @@ function SnakeandPoisonVelocity(key) {
         default:
             break;
     }
-    Poison.velocityX=Random(-1,2);
-    Poison.velocityY=Random(-1,2)
 }
 function SnakeMove() {
     ctx.fillStyle=boardColor;
@@ -123,21 +141,11 @@ function SnakeMove() {
 }
 
 function PoisonMove() {
-    if(Poison.velocityX!=null && Poison.velocityY!=null){
-    Poison.velocityX=Random(-1,2);
-    Poison.velocityY=Random(-1,2);
-    let newPoisonCordinateX=Poison.cordinateX+Poison.velocityX*blockSize,
-    newPoisonCordinateY=Poison.cordinateY+Poison.velocityY*blockSize;
-    while(newPoisonCordinateX==Food.cordinateX || SnakeBodyCollisonX(newPoisonCordinateX) || newPoisonCordinateX>rows*blockSize || newPoisonCordinateX<0)
-        {Poison.velocityX=Random(-1,2);newPoisonCordinateX=Poison.cordinateX+Poison.velocityX*blockSize}
-    while(newPoisonCordinateY==Food.cordinateY || SnakeBodyCollisonY(newPoisonCordinateY) || newPoisonCordinateY>rows*blockSize || newPoisonCordinateY<0)
-        {Poison.velocityY=Random(-1,2);newPoisonCordinateY=Poison.cordinateY+Poison.velocityY*blockSize}
     ctx.fillStyle=boardColor;
-    ctx.fillRect(Poison.cordinateX,Poison.cordinateY,blockSize,blockSize)
-    ctx.fillStyle=Poison.color;
-    ctx.fillRect(newPoisonCordinateX,newPoisonCordinateY,blockSize,blockSize)
-    Poison.cordinateX=newPoisonCordinateX;
-    Poison.cordinateY=newPoisonCordinateY}
+    for (let i = 0; i < Poison.number; i++) {
+        ctx.fillRect(Poison.cordinateX[i],Poison.cordinateY[i],blockSize,blockSize)
+    }
+    PlacePoison()
 }
 addEventListener("keyup",SnakeandPoisonVelocity)
 
