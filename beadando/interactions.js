@@ -41,7 +41,7 @@ function SnakeBodyCollide() {
     }
 }
 function OutsideTheBoard() {
-    if(Snake.headCordinateX<0 || Snake.headCordinateY<0 || Snake.headCordinateX>rows*blockSize || Snake.headCordinateY>columns*blockSize)
+    if(Snake.headCordinateX<0 || Snake.headCordinateY<0 || Snake.headCordinateX>=rows*blockSize || Snake.headCordinateY>=columns*blockSize)
     {
         alert("Game Over!");
         SetInitialStage()
