@@ -1,4 +1,4 @@
-const board=document.querySelector("canvas#board"),
+const board=document.getElementById("board"),
 ctx=board.getContext("2d"),
 blockSize=25,
 boardColor="black",

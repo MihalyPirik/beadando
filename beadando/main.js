@@ -7,14 +7,14 @@ PlacePoison()
 PlaceSnakeHead()
 
 
+
 setInterval(function()
-{
+{   SnakeBodyCollide()
+    FoodEffect()
+    PoisonEffect()
+    OutsideTheBoard()
     Win()
     SnakeMove()
-    FoodEffect()
-    SnakeBodyCollide()
-    OutsideTheBoard()
-    PoisonEffect()
 },speed);
 
 setInterval(function(){
