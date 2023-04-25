@@ -5,7 +5,7 @@ const Snake=
     headCordinateX:null,
     headCordinateY:null,
 
-    bodyCordinates:Array(),
+    bodyCordinates:Array(99,Number),
 
     velocityX:null,
     velocityY:null,
